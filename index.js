@@ -1,9 +1,11 @@
-const express = require("express")
-const uuid = require("uuid")
+const express = require("express");
+const uuid = require("uuid");
+const cors = require('cors');
 
-const port = 3000
+const port = 3001 
 const app = express()
 app.use(express.json())
+app.use(cors());
 
 /*
     - Query params => meusite.com/users?name=welliton&age=28  //FILTROS
@@ -29,27 +31,27 @@ const checkUserId = (request, response, next) =>{
         return response.status(404).json({ error: "User not found"})
     }
 
-    request.userIndex = index
-    request.userId = id
+    request.userIndex = index;
+    request.userId = id;
 
-    next()
-}
+    next();
+};
 
 app.get("/users", (request, response) =>{
 
 
     return response.json(users)
-})
+});
 
 app.post("/users", (request, response) =>{
-    const {name, age} = request.body
+    const {name, age} = request.body;
 
-    const user = {id:uuid.v4(), name, age }
+    const user = {id: uuid.v4(), name, age }
 
     users.push(user)
 
-    return response.status(201).json(users)
-})
+    return response.status(201).json(user);
+});
 
 app.put("/users/:id", checkUserId, (request, response) =>{
     const {name, age} = request.body
